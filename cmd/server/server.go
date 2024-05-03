@@ -2,6 +2,7 @@ package server
 
 import (
 	"URL_shorter/internal/global/database"
+	"URL_shorter/internal/module"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,5 +18,9 @@ func Run() {
 			"message": "pong",
 		})
 	})
+	apiGroup := r.Group("/api")
+	for _, m := range module.Modules {
+		m.InitRouter(apiGroup)
+	}
 	r.Run()
 }
