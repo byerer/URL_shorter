@@ -1,4 +1,4 @@
-package err
+package errs
 
 // This error code refers to the semantics of HTTP status codes
 // to facilitate the identification of error types
