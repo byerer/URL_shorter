@@ -3,13 +3,10 @@ package urlShorter
 import (
 	db "URL_shorter/internal/global/database"
 	"URL_shorter/internal/model"
-	st "URL_shorter/service/shorten"
 )
 
-func CreateUrl(url string) error {
-	short := st.Shorten(url)
-	record := model.Url{ShortURL: short, LongURL: url}
-	err := db.DB.Create(&record).Error
+func CreateUrl(url *model.Url) error {
+	err := db.DB.Create(url).Error
 	return err
 }
 
