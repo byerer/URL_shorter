@@ -7,6 +7,7 @@ import (
 
 func CreateUrl(url *model.Url) error {
 	err := db.DB.Create(url).Error
+
 	return err
 }
 

@@ -1,6 +1,7 @@
 # URL_shorter
 
 ## todo
+- pgcode
 - pkg/errors
 - 读写分离
 - 分库分表
