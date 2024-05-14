@@ -16,5 +16,5 @@ func RegisterModule(m Module) {
 }
 
 func init() {
-	RegisterModule(&urlShorter.URLShorter{})
+	RegisterModule(&urlShorter.ModelURL{})
 }

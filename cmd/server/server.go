@@ -1,14 +1,16 @@
 package server
 
 import (
-	"URL_shorter/internal/global/database"
+	"URL_shorter/internal/global/database/pgsql"
+	"URL_shorter/internal/global/database/redis"
 	"URL_shorter/internal/module"
 	"github.com/gin-gonic/gin"
 )
 
 func Init() {
-	database.Init()
-	database.Ping()
+	pgsql.Init()
+	redis.Init()
+	redis.Ping()
 }
 
 func Run() {
@@ -23,4 +25,8 @@ func Run() {
 		m.InitRouter(apiGroup)
 	}
 	r.Run()
+}
+
+func Close() {
+	redis.Close()
 }

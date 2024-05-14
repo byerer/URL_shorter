@@ -1,4 +1,4 @@
-package database
+package pgsql
 
 import (
 	"URL_shorter/internal/model"
@@ -26,15 +26,4 @@ func Init() {
 		panic(err)
 	}
 	DB = db
-}
-
-func Ping() {
-	var result int
-	// 使用 Raw SQL 查询并扫描结果
-	err := DB.Raw("SELECT 1+1").Scan(&result).Error
-	if err != nil {
-		fmt.Println("Failed to ping PostgreSQL:", err)
-		return
-	}
-	fmt.Println("PostgreSQL ping success, answer is", result)
 }

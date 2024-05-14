@@ -1,4 +1,4 @@
 package urlShorter
 
-type URLShorter struct {
+type ModelURL struct {
 }

@@ -1,7 +1,7 @@
 package urlShorter
 
 import (
-	db "URL_shorter/internal/global/database"
+	db "URL_shorter/internal/global/database/pgsql"
 	"URL_shorter/internal/model"
 )
 

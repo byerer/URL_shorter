@@ -5,12 +5,11 @@ import (
 	"URL_shorter/internal/model"
 	"URL_shorter/service/shorter"
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
-func (u *URLShorter) InitRouter(r *gin.RouterGroup) {
+func (u *ModelURL) InitRouter(r *gin.RouterGroup) {
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
@@ -34,7 +33,6 @@ func Shorten(c *gin.Context) {
 	}
 	err := CreateUrl(url)
 	for errors.Is(err, gorm.ErrDuplicatedKey) {
-		fmt.Println("Duplicate key error, retrying")
 		url.ShortURL += shorter.Add1(1)
 		err = CreateUrl(url)
 	}
