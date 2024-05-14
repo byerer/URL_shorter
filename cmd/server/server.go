@@ -27,6 +27,6 @@ func Run() {
 	r.Run()
 }
 
-func Close() {
+func CloseAll() {
 	redis.Close()
 }
