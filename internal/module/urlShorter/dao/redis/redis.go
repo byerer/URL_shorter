@@ -7,7 +7,7 @@ import (
 )
 
 func CreateUrl(url *model.Url) error {
-	err := redis.Rdb.Set(redis.Ctx, url.ShortURL, url.LongURL, url.Time.Sub(time.Now())).Err()
+	err := redis.Rdb.Set(redis.Ctx, url.ShortURL, url.LongURL, 2*url.Time.Sub(time.Now())/10).Err()
 	return err
 }
 
