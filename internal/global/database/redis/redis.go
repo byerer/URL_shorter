@@ -5,7 +5,8 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-var RDB *redis.Client
+var Rdb *redis.Client
+var Ctx = context.Background()
 
 func Init() {
 	rdb := redis.NewClient(&redis.Options{
@@ -13,15 +14,15 @@ func Init() {
 		Password: "",
 		DB:       0,
 	})
-	RDB = rdb
+	Rdb = rdb
 }
 
 func Close() {
-	RDB.Close()
+	Rdb.Close()
 }
 
 func Ping() {
-	_, err := RDB.Ping(context.Background()).Result()
+	_, err := Rdb.Ping(context.Background()).Result()
 	if err != nil {
 		panic(err)
 	}
