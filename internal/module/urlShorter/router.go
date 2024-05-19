@@ -65,6 +65,9 @@ func Redirect(c *gin.Context) {
 	url, _ := redis.GetUrl(shorten)
 	if url != "" {
 		fmt.Println("find record in redis success")
+		if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
+			url = "http://" + url
+		}
 		c.Redirect(302, url)
 		return
 	}
@@ -77,5 +80,6 @@ func Redirect(c *gin.Context) {
 	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
 		url = "http://" + url
 	}
+	fmt.Println(url)
 	c.Redirect(302, url)
 }

@@ -15,15 +15,6 @@ docker run --name url_shorter `
 -p 5432:5432 postgres
 ```
 
-## postgres
-```
-docker run --name url_shorter_replicas `
--e POSTGRES_PASSWORD=gorm `
--e POSTGRES_USER=gorm `
--e POSTGRES_DB=shorter `
--d `
--p 25432:5432 postgres
-```
 
 
 ## redis
