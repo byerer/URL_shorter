@@ -18,4 +18,5 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 # 从构建器阶段复制编译后的可执行文件
 COPY --from=builder /app/myapp .
+COPY --from=builder /app/web .web/
 CMD ["./myapp"]
