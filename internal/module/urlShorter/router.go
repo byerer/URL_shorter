@@ -62,12 +62,12 @@ func Shorten(c *gin.Context) {
 
 func Redirect(c *gin.Context) {
 	shorten := c.Param("shorter")
-	//url, _ := redis.GetUrl(shorten)
-	//if url != "" {
-	//	fmt.Println("find record in redis success")
-	//	c.Redirect(302, url)
-	//	return
-	//}
+	url, _ := redis.GetUrl(shorten)
+	if url != "" {
+		fmt.Println("find record in redis success")
+		c.Redirect(302, url)
+		return
+	}
 	url, err := pgsql.GetUrl(shorten)
 	if err != nil {
 		errs.Fail(c, errs.DatabaseError.WithOrigin(err))
