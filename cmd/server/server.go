@@ -15,10 +15,14 @@ func Init() {
 
 func Run() {
 	r := gin.Default()
+	r.LoadHTMLFiles("./web/index.html")
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
+	})
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(200, "index.html", nil)
 	})
 	apiGroup := r.Group("/api")
 	for _, m := range module.Modules {

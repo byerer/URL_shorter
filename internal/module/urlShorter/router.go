@@ -10,15 +10,11 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"strings"
 	"time"
 )
 
 func (u *ModelURL) InitRouter(r *gin.RouterGroup) {
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
 	r.POST("/shorter", Shorten)
 	r.GET("/:shorter", Redirect)
 }
@@ -39,6 +35,7 @@ func Shorten(c *gin.Context) {
 	// deal with the time
 	totalSeconds := req.Day*86400 + req.Hour*3600 + req.Minute*60 + req.Second
 	expiredTime := time.Now().Add(time.Duration(totalSeconds) * time.Second)
+	fmt.Println(expiredTime.Format("2006-01-02 15:04:05"))
 	url := &model.Url{
 		LongURL:  req.URL,
 		ShortURL: shorter.Shorten(req.URL),
@@ -60,22 +57,25 @@ func Shorten(c *gin.Context) {
 		errs.Fail(c, errs.DatabaseError.WithOrigin(err))
 		return
 	}
-	errs.Success(c, c.Request.Host+"/"+url.ShortURL)
+	errs.Success(c, "/api/"+url.ShortURL)
 }
 
 func Redirect(c *gin.Context) {
 	shorten := c.Param("shorter")
-	url, _ := redis.GetUrl(shorten)
-	if url != "" {
-		fmt.Println("find record in redis success")
-		c.Redirect(302, url)
-		return
-	}
+	//url, _ := redis.GetUrl(shorten)
+	//if url != "" {
+	//	fmt.Println("find record in redis success")
+	//	c.Redirect(302, url)
+	//	return
+	//}
 	url, err := pgsql.GetUrl(shorten)
 	if err != nil {
 		errs.Fail(c, errs.DatabaseError.WithOrigin(err))
 		return
 	}
 	fmt.Println("find record in pgsql success")
+	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
+		url = "http://" + url
+	}
 	c.Redirect(302, url)
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+</head>
+<body>
+<h1>URL Shortener</h1>
+<form id="shorten-form">
+    <label for="url">Enter URL:</label>
+    <input type="text" id="url" name="url" required>
+    <label for="day">Day:</label>
+    <input type="number" id="day" name="day" min="0">
+    <label for="hour">Hour:</label>
+    <input type="number" id="hour" name="hour" min="0" max="23">
+    <label for="minute">Minute:</label>
+    <input type="number" id="minute" name="minute" min="0" max="59">
+    <label for="second">Second:</label>
+    <input type="number" id="second" name="second" min="0" max="59">
+    <button type="submit">Shorten</button>
+</form>
+<div id="shortened-url"></div>
+
+<script>
+    document.getElementById("shorten-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var url = document.getElementById("url").value;
+        var day = document.getElementById("day").value;
+        var hour = document.getElementById("hour").value;
+        var minute = document.getElementById("minute").value;
+        var second = document.getElementById("second").value;
+        shortenUrl(url, day, hour, minute, second);
+    });
+
+    function shortenUrl(url, day, hour, minute, second) {
+        fetch("/api/shorter", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                url: url,
+                day: parseInt(day),
+                hour: parseInt(hour),
+                minute: parseInt(minute),
+                second: parseInt(second)
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("shortened-url").innerHTML = `<p>Shortened URL: <a href="${data.data}">${data.data}</a></p>`;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+</script>
+</body>
+</html>

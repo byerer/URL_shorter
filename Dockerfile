@@ -1,6 +1,9 @@
 # 第一阶段：构建阶段
 FROM golang:1.21.3 as builder
 WORKDIR /app
+
+ENV GOPROXY=https://goproxy.cn,direct
+
 COPY go.mod go.sum ./
 RUN go mod download
 

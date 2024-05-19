@@ -20,7 +20,7 @@ func Init() {
 		fmt.Println("postgresql init failed")
 	}
 	err = db.AutoMigrate(
-		model.Url{},
+		&model.Url{},
 	)
 	if err != nil {
 		panic(err)
