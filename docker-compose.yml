@@ -40,5 +40,5 @@ volumes:
   redis_data:
 
 networks:
-    mynet:
-        driver: bridge
+  mynet:
+    driver: bridge
